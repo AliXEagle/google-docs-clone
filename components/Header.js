@@ -34,7 +34,7 @@ function Header() {
 				rounded={true}
 				iconOnly={true}
 				ripple='dark'
-				className='ml-5 md:ml-20 h-20 w-20 border-0'>
+				className='hidden md:inline-flex ml-5 md:ml-15 h-20 w-20 border-0'>
 				<Icon name='apps' size='3xl' color='gray' />
 			</Button>
 

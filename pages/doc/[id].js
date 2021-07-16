@@ -5,6 +5,7 @@ import { db } from '../../firebase';
 import { useDocumentOnce } from 'react-firebase-hooks/firestore';
 import { getSession, signOut, useSession } from 'next-auth/client';
 import Login from '../../components/Login';
+import TextEditor from '../../components/TextEditor';
 
 function Doc() {
 	const [session] = useSession();
@@ -29,7 +30,7 @@ function Doc() {
 					<Icon name='description' size='5xl' color='blue' />
 				</span>
 
-				<div>
+				<div className='flex-grow px-2'>
 					<h2>{snapshot?.data()?.fileName}</h2>
 					<div className='flex items-center text-sm space-x-1 -ml-1 h-8 text-gray-600'>
 						<p className='option'>File</p>
@@ -40,9 +41,38 @@ function Doc() {
 						<p className='option'>Tools</p>
 					</div>
 				</div>
+				<Button
+					color='lightBlue'
+					buttonType='filled'
+					size='regular'
+					className='hidden md:inline-flex h-10'
+					rounded={false}
+					block={false}
+					iconOnly={false}
+					ripple='light'>
+					<Icon name='people' size='md' /> SHARE
+				</Button>
+
+				<img
+					src={session.user.image}
+					alt=''
+					className='cursor-pointer rounded-full h-10 w-10 ml-2'
+				/>
 			</header>
+
+			<TextEditor />
 		</div>
 	);
 }
 
 export default Doc;
+
+export async function getServerSideProps(context) {
+	const session = await getSession(context);
+
+	return {
+		props: {
+			session,
+		},
+	};
+}
